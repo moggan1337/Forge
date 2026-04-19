@@ -1,0 +1,186 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "forge-transpiler"
+version = "0.1.0"
+description = "AI-Assisted Language Transpiler - Convert code between languages with intelligent context awareness"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Forge Team", email = "team@forge-transpiler.dev"}
+]
+keywords = ["transpiler", "compiler", "code-conversion", "typescript", "python", "rust", "go", "llm", "ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Compilers",
+    "Topic :: Software Development :: Translators",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "tree-sitter>=0.20.0",
+    "tree-sitter-python>=0.20.0",
+    "tree-sitter-typescript>=0.20.0",
+    "tree-sitter-rust>=0.20.0",
+    "tree-sitter-go>=0.20.0",
+    "openai>=1.0.0",
+    "anthropic>=0.10.0",
+    "iniconfig>=2.0.0",
+    "pyyaml>=6.0",
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.7.0",
+    "ruff>=0.1.0",
+    "pre-commit>=3.5.0",
+    "types-click>=7.1.8",
+    "types-pyyaml>=6.0.12",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.7.0",
+    "pre-commit>=3.5.0",
+    "ipython>=8.0.0",
+]
+lsp = [
+    "pygls>=1.0.0",
+    "python-lsp-server>=1.8.0",
+    "jedi>=0.19.0",
+    "parso>=0.8.0",
+]
+
+[project.scripts]
+forge = "forge.cli.main:main"
+
+[project.urls]
+Homepage = "https://github.com/moggan1337/Forge"
+Documentation = "https://forge-transpiler.dev/docs"
+Repository = "https://github.com/moggan1337/Forge"
+Issues = "https://github.com/moggan1337/Forge/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+forge = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "YTT", # flake8-2020
+    "ASYNC", # flake8-async
+    "B",   # flake8-bugbear
+    "A",   # flake8-builtins
+    "C4",  # flake8-comprehensions
+    "DTZ", # flake8-datetimez
+    "T10", # flake8-debugger
+    "ISC", # flake8-implicit-str-concat
+    "ICN", # flake8-import-conventions
+    "G",   # flake8-logging-format
+    "PIE", # flake8-pie
+    "TCH", # flake8-type-checking
+    "RSE", # flake8-raise
+    "RET", # flake8-return
+    "SLF", # flake8-self
+    "SIM", # flake8-simplify
+    "PTH", # flake8-use-pathlib
+    "PL",  # pylint
+    "TRY", # tryceratops
+    "FLY", # flynt
+    "PERF", # perflint
+    "RUF",  # ruff-specific rules
+]
+ignore = [
+    "E501",   # line too long (handled by black)
+    "TRY003", # raise Exception (too broad)
+]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = ["rich.*", "click.*", "tree_sitter.*"]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["src/forge"]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+    "*/conftest.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
