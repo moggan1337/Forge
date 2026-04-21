@@ -17,6 +17,24 @@ Forge uses advanced AST parsing combined with LLM assistance to convert code bet
 
 ---
 
+## 🎬 Demo
+![Forge Demo](demo.gif)
+
+*AI-powered code transpilation between languages*
+
+## Screenshots
+| Component | Preview |
+|-----------|---------|
+| Source Code | ![source](screenshots/source.png) |
+| Transpiled Output | ![output](screenshots/transpiled.png) |
+| AST View | ![ast](screenshots/ast-view.png) |
+
+## Visual Description
+Source code panel shows original TypeScript being analyzed. Transpiled output displays equivalent Python with idiomatic constructs. AST view shows parsed syntax tree with node highlighting.
+
+---
+
+
 ## Table of Contents
 
 - [Overview](#overview)
